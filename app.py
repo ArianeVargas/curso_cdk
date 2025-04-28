@@ -3,26 +3,57 @@ import os
 
 import aws_cdk as cdk
 
-from curso_cdk_practica.curso_cdk_practica_stack import CursoCdkPracticaStack
+#from curso_cdk_practica.curso_cdk_practica_stack import CursoCdkPracticaStack
+from resource_stacks.custom_vpc import CustomVpcStack
+from resource_stacks.custom_ec2 import CustomEc2Stack
+from resource_stacks.custom_ec2_with_lates_ami import CustomEc2LatestAmiStack
+from resource_stacks.custom_ec2_with_ebs_piops import CustomEc2PiopsStack
+from resource_stacks.custom_iam_users_groups import CustomIamUsersGroupsStack
+from resource_stacks.custom_iam_roles_policies import CustomRolesPoliciesStack
+from resource_stacks.custom_s3_resource_policy import CustomS3ResourcePolicyStack
+
+from app_stacks.vpc_stack import VpcStack
+from app_stacks.web_server_stack import WebServerStack
 
 
 app = cdk.App()
-CursoCdkPracticaStack(app, "CursoCdkPracticaStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+# CustomVpcStack(app, "CustomVpcStack",
+#                is_prod=True,
+#                env=cdk.Environment(account="987227712684", region="us-east-1"))
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+# CustomEc2Stack(app, "CustomEc2Stack",
+#                is_prod=True,
+#                env=cdk.Environment(account="987227712684", region="us-east-1"))
 
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
+# CustomEc2LatestAmiStack(app, "CustomEc2LatestAmiStack",
+#                         is_prod=True,
+#                         env=cdk.Environment(account="987227712684", region="us-east-2"))
 
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
+# CustomEc2PiopsStack(app, "CustomEc2PiopsStack",
+#                         is_prod=True,
+#                         env=cdk.Environment(account="987227712684", region="us-east-1"))
 
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+# vpc_stack = VpcStack(app, "multi-tier-app-vpc-stack")
+# ec2_stack = WebServerStack(
+#     app, "multi-tier-app-web-server-stack", vpc=vpc_stack.vpc)
+
+# iam_users_groups_stack = CustomIamUsersGroupsStack(
+#     app,
+#     "custom-iam-users-groups-stack",
+#     description="Create IAM User & Groups"
+# )
+
+# custom_iam_roles_policies = CustomRolesPoliciesStack(
+#     app,
+#     "custom-iam-roles-policies-stack",
+#     description="Create IAM Roles & Policies"
+# )
+
+custom_s3_resource_policy = CustomS3ResourcePolicyStack(
+    app,
+    "custom-s3-esource-policy-stack",
+    description="Create S3 Resource Policy"
+)
 
 app.synth()
