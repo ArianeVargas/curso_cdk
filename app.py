@@ -11,6 +11,15 @@ from resource_stacks.custom_ec2_with_ebs_piops import CustomEc2PiopsStack
 from resource_stacks.custom_iam_users_groups import CustomIamUsersGroupsStack
 from resource_stacks.custom_iam_roles_policies import CustomRolesPoliciesStack
 from resource_stacks.custom_s3_resource_policy import CustomS3ResourcePolicyStack
+from resource_stacks.custom_sns import CustomSnsStack
+from resource_stacks.custom_sqs import CustomSqsStack
+
+# VPC, EC2, ALB, RDS Stack
+from app_db_stack.vpc_3tier_stack import Vpc3TierStack
+from app_db_stack.web_server_3tier_stack import WebServer3TierStack
+from app_db_stack.rds_3tier_stack import RdsDatabase3TierStack
+
+from stacks_from_cfn.stack_from_existing_cfn_template import StackFromCloudFormationTemplate
 
 from app_stacks.vpc_stack import VpcStack
 from app_stacks.web_server_stack import WebServerStack
@@ -50,10 +59,42 @@ app = cdk.App()
 #     description="Create IAM Roles & Policies"
 # )
 
-custom_s3_resource_policy = CustomS3ResourcePolicyStack(
-    app,
-    "custom-s3-esource-policy-stack",
-    description="Create S3 Resource Policy"
-)
+# custom_s3_resource_policy = CustomS3ResourcePolicyStack(
+#     app,
+#     "custom-s3-esource-policy-stack",
+#     description="Create S3 Resource Policy"
+# )
+
+# Create 3Tier App with App Servers in ASG and Backend as RDS Database
+# vpc_3tier_stack = Vpc3TierStack(app, "multi-tier-app-vpc-stack")
+# app_3tier_stack = WebServer3TierStack(
+#     app, "multi-tier-app-web-server-stack", vpc=vpc_3tier_stack.vpc)
+# db_3tier_stack = RdsDatabase3TierStack(
+#     app,
+#     "multi-tier-app-db-stack",
+#     vpc=vpc_3tier_stack.vpc,
+#     asg_security_groups=app_3tier_stack.web_server_asg.connections.security_groups,
+#     description="Create Custom RDS Database"
+# )
+
+# Resource Stack from pre-existing Cloudformation Template
+# stack_from_cfn = StackFromCloudFormationTemplate(app,
+#                                                  "stack-from-pre-existing-cfn",
+#                                                  description="Resource Stack from pre-existing Cloudformation Template"
+#                                                  )
+
+# Create SNS Topics & Add Email Subscriptions
+# custom_sns = CustomSnsStack(
+#     app,
+#     "custom-sns-stack",
+#     description="Create SNS Topics & Add Email Subscriptions"
+# )
+
+# Create SQS for microservices
+# custom_sqs = CustomSqsStack(
+#     app,
+#     "custom-sqs-stack",
+#     description="Create a fully managed message queues for microservices"
+# )
 
 app.synth()
