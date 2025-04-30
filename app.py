@@ -14,6 +14,8 @@ from resource_stacks.custom_s3_resource_policy import CustomS3ResourcePolicyStac
 from resource_stacks.custom_sns import CustomSnsStack
 from resource_stacks.custom_sqs import CustomSqsStack
 
+from serverless_stacks.custom_lambda import CustomLambdaStack
+
 # VPC, EC2, ALB, RDS Stack
 from app_db_stack.vpc_3tier_stack import Vpc3TierStack
 from app_db_stack.web_server_3tier_stack import WebServer3TierStack
@@ -96,5 +98,13 @@ app = cdk.App()
 #     "custom-sqs-stack",
 #     description="Create a fully managed message queues for microservices"
 # )
+
+# Create Serverless Event Processor using Lambda
+custom_lambda = CustomLambdaStack(
+    app,
+   "custom-lambda-stack",
+    description="Create Serverless Event Processor using Lambda"
+)
+
 
 app.synth()
