@@ -15,6 +15,9 @@ from resource_stacks.custom_sns import CustomSnsStack
 from resource_stacks.custom_sqs import CustomSqsStack
 
 from serverless_stacks.custom_lambda import CustomLambdaStack
+from serverless_stacks.custom_cloudwatch_loggroups import CustomLoggroupStack
+from serverless_stacks.custom_lambda_src_from_s3 import CustomLambdaSrcFromS3Stack
+from serverless_stacks.custom_lambda_as_cron import CustomLambdaAsCronStack
 
 # VPC, EC2, ALB, RDS Stack
 from app_db_stack.vpc_3tier_stack import Vpc3TierStack
@@ -100,11 +103,31 @@ app = cdk.App()
 # )
 
 # Create Serverless Event Processor using Lambda
-custom_lambda = CustomLambdaStack(
-    app,
-   "custom-lambda-stack",
-    description="Create Serverless Event Processor using Lambda"
-)
+# custom_lambda = CustomLambdaStack(
+#     app,
+#    "custom-lambda-stack",
+#     description="Create Serverless Event Processor using Lambda"
+# )
 
+# Create Custom Cloudwatch Loggroups
+# custom_loggroup = CustomLoggroupStack(
+#     app,
+#     "custom-loggroup-stack",
+#     description="Create Custom Cloudwatch Loggroups"
+# )
+
+# Create Lambda Source Assets from S3
+# custom_lambda_src_from_s3 = CustomLambdaSrcFromS3Stack(
+#     app,
+#     "custom-lambda-src-from-s3-stack",
+#     description="Create Lambda Source Assets from S3"
+# )
+
+# Create Lambda as a Cron Scheduler
+custom_lambda_as_cron = CustomLambdaAsCronStack(
+    app,
+    "custom-lambda-as-cron",
+    description="Create Lambda as a Cron Scheduler"
+)
 
 app.synth()
